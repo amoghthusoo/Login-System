@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTPYE html>
+    <html>
+
+    <head>
+        <title>
+            Login
+        </title>
+        <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+        <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+    </head>
+
+    <body>
+
+        <ul>
+            {% if user.is_authenticated %}
+            <li><a href="/">Home</a></li>
+            <li><a href="/Register/login.html">Login</a></li>
+            <li><a href="/Register/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/">Home</a></li>
+            <li><a href="/Register/login.html">Login</a></li>
+            <li><a href="/Register/signup.html">Signup</a></li>
+            {% endif %}
+        </ul>
+
+        <br>
+
+        <div>
+            <form action="login.html" method="post">
+
+                {% csrf_token %}
+                
+                <label>Username</label><br>
+                <input type="text" name="username" placeholder="Username" autocomplete="off"><br><br>
+                
+                <label>Password</label><br>
+                <input type="password" name="password" placeholder="Password"><br><br>
+                
+                <input type="submit">
+            </form>
+        </div>
+
+        {% for message in messages %}
+        <p style="text-align : center; color: red;"><b>{{message}}</b></p>
+        {% endfor %}
+
+    </body>
+
+    </html>

@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTPYE html>
+<html>
+<head>
+    <title>
+        Login System
+    </title>
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <link rel = "stylesheet" href = "{% static 'styles/style.css' %}">
+</head>
+
+<body>
+
+    <ul>
+        {% if user.is_authenticated %}
+        <li><a href = "/">Home</a></li>
+        <li><a href = "/Register/login.html">Login</a></li>
+        <li><a href = "/Register/logout">Logout</a></li>
+        {% else %}
+        <li><a href = "/">Home</a></li>
+        <li><a href = "/Register/login.html">Login</a></li>
+        <li><a href = "/Register/signup.html">Signup</a></li>
+        {% endif %}
+    </ul>
+
+    {% if user.is_authenticated %}
+    <p style = "text-align : left; font-size : larger;"><b> Hello, {{user.username}}. You are now logged in.</b></p>
+    {% else %}
+    <p style = "text-align : left; font-size : larger;"><b>Login or Create an Account!</b></p>
+    {% endif %}
+    
+</body>
+</html>

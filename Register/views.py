@@ -15,8 +15,19 @@ def signup(request):
         
         username = request.POST["username"]
         password = request.POST["password"]
+        confirm_password = request.POST["confirm_password"]
 
-        if(User.objects.filter(username = username).exists()):
+        if(len(username) == 0 or len(password) == 0 or len(confirm_password) == 0):
+            messages.info(request, "Please Enter all the details!")
+            return redirect("signup.html")
+
+        print(password, confirm_password)
+
+        if(password != confirm_password):
+            messages.info(request, "Passwords do not match!")
+            return redirect("signup.html")
+
+        elif(User.objects.filter(username = username).exists()):
             messages.info(request, "Username not available!")
             return redirect("signup.html")
         else:
