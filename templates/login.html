@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %} -->
 <!DOCTPYE html>
     <html>
 
@@ -7,7 +7,89 @@
             Login
         </title>
         <meta name="viewport" content="width = device-width, initial-scale = 1.0">
-        <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+        <!-- <link rel="stylesheet" href="{% static 'styles/style.css' %}"> -->
+
+        <style>
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color:#7b0290;
+            }
+
+            li {
+                float: left;
+            }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            li a:hover {
+                background-color: #670178;
+            }
+
+            input[type=text] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            input[type=password] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            input[type=submit] {
+                width: 100%;
+                background-color: #7b0290;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+                background-color: #670178;
+            }
+
+            div {
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 20px;
+
+                width: 30%;
+                margin: auto;
+            }
+
+            @media only screen and (max-width : 480px){
+                div {
+                    border-radius: 5px;
+                    background-color: #f2f2f2;
+                    padding: 20px;
+    
+                    width: 70%;
+                    margin: auto;
+                }
+            }
+            
+        </style>
     </head>
 
     <body>
@@ -15,7 +97,7 @@
         <ul>
             {% if user.is_authenticated %}
             <li><a href="/">Home</a></li>
-            <li><a href="/Register/login.html">Login</a></li>
+            <!-- <li><a href="/Register/login.html">Login</a></li> -->
             <li><a href="/Register/logout">Logout</a></li>
             {% else %}
             <li><a href="/">Home</a></li>
@@ -25,19 +107,21 @@
         </ul>
 
         <br>
-
+        
         <div>
+            <h1>Login</h1>
+            
             <form action="login.html" method="post">
 
                 {% csrf_token %}
-                
+
                 <label>Username</label><br>
                 <input type="text" name="username" placeholder="Username" autocomplete="off"><br><br>
-                
+
                 <label>Password</label><br>
                 <input type="password" name="password" placeholder="Password"><br><br>
-                
-                <input type="submit">
+
+                <input type="submit" value="Login">
             </form>
         </div>
 
