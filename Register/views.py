@@ -19,21 +19,21 @@ def signup(request):
 
         if(len(username) == 0 or len(password) == 0 or len(confirm_password) == 0):
             messages.info(request, "Please Enter all the details!")
-            return redirect("signup.html")
+            return redirect("signup")
 
         print(password, confirm_password)
 
         if(password != confirm_password):
             messages.info(request, "Passwords do not match!")
-            return redirect("signup.html")
+            return redirect("signup")
 
         elif(User.objects.filter(username = username).exists()):
             messages.info(request, "Username not available!")
-            return redirect("signup.html")
+            return redirect("signup")
         else:
             user = User.objects.create_user(username = username, password = password)
             user.save()
-            return redirect("login.html")
+            return redirect("login")
     else:
         return render(request, "signup.html")
 
@@ -51,7 +51,7 @@ def login(request):
             return redirect("/")
         else:
             messages.info(request, "Invalid Credentials!")
-            return redirect("login.html")
+            return redirect("login")
         
     else:
         return render(request, "login.html")
@@ -59,3 +59,20 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+def delete_account(request):
+    
+    if(request.method == "POST"):
+
+        password = request.POST["password"]
+        user = auth.authenticate(username = request.user, password = password)
+
+        if(user is not None):
+            request.user.delete()
+            return redirect("/")
+        else:
+            messages.info(request, "Incorrect Password!")
+            return redirect("delete_account")
+    else:
+        return render(request, "delete_account.html")
+    

@@ -101,8 +101,8 @@
             <li><a href="/Register/logout">Logout</a></li>
             {% else %}
             <li><a href="/">Home</a></li>
-            <li><a href="/Register/login.html">Login</a></li>
-            <li><a href="/Register/signup.html">Signup</a></li>
+            <li><a href="/Register/login">Login</a></li>
+            <li><a href="/Register/signup">Signup</a></li>
             {% endif %}
         </ul>
 
@@ -111,7 +111,7 @@
         <div>
             <h1>Login</h1>
             
-            <form action="login.html" method="post">
+            <form action="login" method="post">
 
                 {% csrf_token %}
 
@@ -126,7 +126,7 @@
         </div>
 
         {% for message in messages %}
-        <p style="text-align : center; color: red;"><b>{{message}}</b></p>
+        <p style="text-align : center; color: #c30000;"><b>{{message}}</b></p>
         {% endfor %}
 
     </body>
