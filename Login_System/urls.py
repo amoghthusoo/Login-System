@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("Register.urls")),
     path("SGPA_Calc/", include("SGPA_Calc.urls")),
+    path("Chat/", include("Chat.urls")),
 ]
