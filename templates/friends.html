@@ -4,7 +4,7 @@
 
     <head>
         <title>
-            Login System
+            Friends
         </title>
         <meta name="viewport" content="width = device-width, initial-scale = 1.0">
         <!-- <link rel = "stylesheet" type = "text/css" href = "{% static 'styles/style.css' %}"> -->
@@ -89,6 +89,41 @@
                 }
             }
 
+            td,
+            th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #ddd;
+            }
+
+            th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #7b0290;
+                color: white;
+            }
+            
+            .button {
+                background-color: #c30000;
+                border: none;
+                color: white;
+                padding: 0px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+              }
+
         </style>
     </head>
 
@@ -97,12 +132,9 @@
         <ul>
             {% if user.is_authenticated %}
             <li><a href="/">Home</a></li>
-            <!-- <li><a href="/Register/login.html">Login</a></li> -->
-            <li><a href="/SGPA_Calc/calculate_save">SGPA</a></li>
-            <li><a href="/Chat/chat">Chat</a></li>
             <li><a href="/Friends/friends">Friends</a></li>
-            <li><a href="/Register/logout">Logout</a></li>
-            <li><a href="/Register/delete_account">Delete Account</a></li>
+            <li><a href="/Friends/requests">Requests</a></li>
+            <li><a href="/Friends/send_request">Send Friend Request</a></li>
             {% else %}
             <li><a href="/">Home</a></li>
             <li><a href="/Register/login">Login</a></li>
@@ -110,10 +142,32 @@
             {% endif %}
         </ul>
 
-        {% if user.is_authenticated %}
-        <p style="text-align : left; font-size : medium;"><b> Hello, {{user.username}}. You are now logged in.</b></p>
+        <br>
+
+        {% if not friend_list%}
+        <p style="text-align : left; font-size : medium;"><b>No friends to show.</b></p>
         {% else %}
-        <p style="text-align : left; font-size : medium;"><b>Login or Create an Account!</b></p>
+        <table>
+            <tr>
+                <th>
+                    Friend List
+                </th>
+                <th>
+                    Remove Friend
+                </th>
+            </tr>
+            {% for friend in friend_list %}
+            <tr>
+                <td>
+                    {{friend}}
+                </td>
+                <td style="padding: 0%; background-color: #c30000;">
+                    <a href= "remove/{{friend}}" class="button">Remove</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
         {% endif %}
 
     </body>

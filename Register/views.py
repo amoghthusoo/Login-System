@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 
+from Friends.friends_lib import Database
+
 # Create your views here.
 
 def index(request):
@@ -39,6 +41,8 @@ def signup(request):
 
 def login(request):
 
+    database = Database()
+
     if(request.method == "POST"):
         
         username = request.POST["username"]
@@ -48,6 +52,16 @@ def login(request):
 
         if(user is not None):
             auth.login(request, user)
+
+            # creating tables for friend list and request list
+
+            if(not database.if_table_friends_exists(username)):    
+                database.create_table_friends(username)
+    
+            if(not database.if_table_requests_exists(username)):
+                database.create_table_requests(username)
+
+
             return redirect("/")
         else:
             messages.info(request, "Invalid Credentials!")
