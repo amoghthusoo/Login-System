@@ -18,13 +18,17 @@ class Database:
 
     def pull(self):
         
-        self.crs.execute(f'''select * from messages''')
+        self.crs.execute(f'''select * from messages;''')
         record_list = []
         
         for data in self.crs:
             record_list.append(list(data))
 
         return record_list
+    
+    def clear_chat(self):
+
+        self.crs.execute('''delete from messages;''')
     
 def main():
     

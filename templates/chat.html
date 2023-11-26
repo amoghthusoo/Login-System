@@ -142,6 +142,23 @@
         </script>
 
         <script>
+            $(document).ready(function(){
+                $("#send_message").submit(function (event){
+                    event.preventDefault();
+                    $.ajax({
+                        type : "POST",
+                        url : "put_message",
+                        data : $("#send_message").serialize(),
+                        //success : function(data){
+                        //   console.log(data);
+                        //}
+                    });
+                    document.getElementById("message_box").value = "";
+                });
+            });
+        </script>
+
+        <script>
             function scroll_down(){
                 var objDiv = document.getElementById("message_div");
                 objDiv.scrollTop = objDiv.scrollHeight;
@@ -156,6 +173,11 @@
             {% if user.is_authenticated %}
             <li><a href="/">Home</a></li>
             <li><a href="/Chat/chat">Chat</a></li>
+
+                {% if user.is_superuser%}
+                <li><a href="/Chat/clear">Clear Chat</a></li>
+                {% endif %}
+            
             {% endif %}
         </ul>
 
@@ -170,12 +192,12 @@
             
             <br>
 
-            <form action="chat" method="post">
+            <form id="send_message" method="post">
 
                 {% csrf_token %}
 
                 <label>Enter Message</label><br>
-                <input type="text" name="message" placeholder="Message" autocomplete="off"><br><br>
+                <input id = "message_box" type="text" name="message" placeholder="Message" autocomplete="off"><br><br>
 
                 <input type="submit" value="Send">
             </form>
