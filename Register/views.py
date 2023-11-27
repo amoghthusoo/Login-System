@@ -4,6 +4,9 @@ from django.contrib import messages
 
 from Friends.friends_lib import Database
 
+
+database = Database()
+
 # Create your views here.
 
 def index(request):
@@ -41,7 +44,7 @@ def signup(request):
 
 def login(request):
 
-    database = Database()
+    # database = Database()
 
     if(request.method == "POST"):
         

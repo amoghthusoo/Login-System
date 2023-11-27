@@ -111,11 +111,24 @@
                 color: white;
             }
             
-            .button {
+            .remove_button {
                 background-color: #c30000;
                 border: none;
                 color: white;
                 padding: 0px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+              }
+              
+              .chat_button {
+                background-color: green;
+                border: none;
+                color: white;
+                padding: 0px 42px;
                 text-align: center;
                 text-decoration: none;
                 display: inline-block;
@@ -153,6 +166,9 @@
                     Friend List
                 </th>
                 <th>
+                    Direct Message
+                </th>
+                <th>
                     Remove Friend
                 </th>
             </tr>
@@ -161,8 +177,11 @@
                 <td>
                     {{friend}}
                 </td>
+                <td style="padding: 0%; background-color: green;">
+                    <a href= "dm/{{user}}/{{friend}}" class="chat_button">Chat</a>
+                </td>
                 <td style="padding: 0%; background-color: #c30000;">
-                    <a href= "remove/{{friend}}" class="button">Remove</a>
+                    <a href= "remove/{{friend}}" class="remove_button">Remove</a>
                 </td>
             </tr>
             {% endfor %}

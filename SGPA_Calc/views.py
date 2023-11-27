@@ -29,13 +29,17 @@ def calculate_save(request):
             database.push(request.user, semester,
                           course_code, credits, marks, sgpa)
 
+            database.close_connection()
             return render(request, "sgpa_save.html")
 
         except:
             messages.info(request, "Invalid Data!")
+
+            database.close_connection()
             return render(request, "sgpa_save.html")
 
     else:
+        database.close_connection()
         return render(request, "sgpa_save.html")
 
 
@@ -51,8 +55,5 @@ def records(request):
     for row in record_list:
         records.append(dict(zip(keys, row)))
 
+    database.close_connection()
     return render(request, "records.html", {"records" : records})
-
-
-def get_element(_list, _index):
-    return _list[_index]

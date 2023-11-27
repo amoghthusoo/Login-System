@@ -67,6 +67,9 @@ class Database:
             record_list.append(list(data))
 
         return record_list
+    
+    def close_connection(self):
+        self.hdl.close()
         
         
 

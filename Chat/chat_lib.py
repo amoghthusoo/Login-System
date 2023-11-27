@@ -29,6 +29,9 @@ class Database:
     def clear_chat(self):
 
         self.crs.execute('''delete from messages;''')
+
+    def close_connection(self):
+        self.hdl.close()
     
 def main():
     

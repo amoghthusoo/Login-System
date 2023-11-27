@@ -8,12 +8,13 @@ def chat(request):
     return render(request, "chat.html")
     
 def get_messages(request):
-    
+
     database = chat_lib.Database()
     
     message_list = database.pull()
     messages = [message[0] for message in message_list]
 
+    database.close_connection()
     return JsonResponse({"messages" : messages})
 
 def put_message(request):
@@ -25,12 +26,14 @@ def put_message(request):
         message = str(request.user) + " : " + message
         database.push(message)
 
+    database.close_connection()
     return HttpResponse()
 
 def clear(request):
     
     database = chat_lib.Database()
     database.clear_chat()
+    database.close_connection()
     return redirect("chat")
 
 

@@ -1,0 +1,207 @@
+<!-- {% load static %} -->
+<!DOCTPYE html>
+    <html>
+
+    <head>
+        <title>
+            Direct Message
+        </title>
+        <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+        <!-- <link rel = "stylesheet" type = "text/css" href = "{% static 'styles/style.css' %}"> -->
+
+        <style>
+            ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #7b0290;
+            }
+
+            li {
+                float: left;
+            }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            li a:hover {
+                background-color: #670178;
+            }
+
+            input[type=text] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            input[type=password] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            input[type=submit] {
+                width: 100%;
+                background-color: #7b0290;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            input[type=submit]:hover {
+                background-color: #670178;
+            }
+
+            div {
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 20px;
+
+                width: 50%;
+                margin: auto;
+            }
+
+            #message_div{
+                background-color: white;
+                border-radius: 5px;
+
+                padding: 20px;
+               
+
+                width: auto;
+                height: 300px;
+
+                overflow: scroll;
+                
+            }
+
+            @media only screen and (max-width : 480px){
+                div {
+                    border-radius: 5px;
+                    background-color: #f2f2f2;
+                    padding: 20px;
+    
+                    width: 70%;
+                    margin: auto;
+                }
+            }
+
+            
+        </style>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        
+
+        <script>
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
+
+        <script>
+            $(document).ready(function(){
+
+                setInterval(function(){
+                    $.ajax({
+                        type : "GET",
+                        url : "/Friends/get_dms",
+                        data : {"dest_user" : document.getElementById("dest_user").innerText},
+                        success : function(response){ 
+                           //console.log(response);
+
+                            $("#message_div").empty();
+                            
+                            for(var index in response.messages){
+                                var temp = response.messages[index] + "<br>"
+                                $("#message_div").append(temp);
+                            }
+
+                            scroll_down()
+
+                        },
+                    });
+                }, 100);
+            });
+        </script>
+
+        <script>
+            $(document).ready(function(){
+                $("#send_message").submit(function (event){
+                    event.preventDefault();
+                    $.ajax({
+                        type : "POST",
+                        url : "/Friends/put_dm",
+                        data : $("#send_message").serialize() + "&dest_user=" + document.getElementById("dest_user").innerText
+                        //success : function(data){
+                        //   console.log(data);
+                        //}
+                    });
+                    document.getElementById("message_box").value = "";
+                });
+            });
+        </script>
+
+        <script>
+            function scroll_down(){
+                var objDiv = document.getElementById("message_div");
+                objDiv.scrollTop = objDiv.scrollHeight;
+            }
+        </script>
+    
+    </head>
+
+    <body>
+
+        <ul>
+            {% if user.is_authenticated %}
+            <li><a href="/">Home</a></li>
+            <li><a href="/Friends/friends">Friends</a></li>
+            <li><a href="/Friends/clear_chat/{{dest_user}}">Clear Chat</a></li>
+                
+            
+            {% endif %}
+        </ul>
+
+        <br>
+
+        <div>
+            <h1>Direct Message @ <span id="dest_user">{{dest_user}}</span></h1>
+
+            <div id = "message_div">
+                
+            </div>
+            
+            <br>
+
+            <form id="send_message" method="post">
+
+                {% csrf_token %}
+
+                <label>Enter Message</label><br>
+                <input id = "message_box" type="text" name="message" placeholder="Message" autocomplete="off"><br><br>
+
+                <input type="submit" value="Send">
+            </form>
+        </div>
+
+    </body>
+
+    </html>

@@ -115,6 +115,44 @@ class Database:
         self.crs.execute(f'''delete from friends_{user} where friends = "{target}";''')
         self.crs.execute(f'''delete from friends_{target} where friends = "{user}";''')
 
+    def pull_dms(self, source_user, dest_user):
+        
+        if(source_user < dest_user):
+            id = source_user + "_"  + dest_user
+        else:
+            id = dest_user + "_" + source_user 
+
+        self.crs.execute(f'''select messages from dms where id = "{id}";''')
+
+        record_list = []
+        
+        for data in self.crs:
+            record_list.append(list(data)[0])
+
+        return record_list
+    
+    def push_dm(self, source_user, dest_user, message):
+        
+        if(source_user < dest_user):
+            id = source_user + "_"  + dest_user
+        else:
+            id = dest_user + "_" + source_user
+
+        message = source_user + " : " + message
+
+        self.crs.execute(f'''insert into dms values("{id}", "{message}");''')
+
+    def clear_chat(self, source_user, dest_user):
+
+        if(source_user < dest_user):
+            id = source_user + "_"  + dest_user
+        else:
+            id = dest_user + "_" + source_user
+
+        self.crs.execute(f'''delete from dms where id = "{id}";''')
+
+    def close_connection(self):
+        self.hdl.close()
 
 
 def main():
@@ -143,8 +181,12 @@ def main():
     # out = database.if_already_friends("user", "amoghthusoo")
     # print(out)
 
-    database.send_friend_request("user9", "amoghthusoo")
+    # database.send_friend_request("user9", "amoghthusoo")
     
+    # out = database.pull_dms("test", "amoghthusoo")
+    # print(out)
+
+    # database.push_dm("test", "amoghthusoo", "this is a message")
 
 if(__name__ == "__main__"):
     main()
