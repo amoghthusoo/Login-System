@@ -41,13 +41,11 @@ class Database:
     def create_table_friends(self, username):
         self.crs.execute(f'''create table friends_{username}(friends varchar(150));''')
         
-
     def create_table_requests(self, username):
         self.crs.execute(f'''create table requests_{username}(requests varchar(150));''')
 
     def delete_table_friends(self, username):
         self.crs.execute(f'''drop table friends_{username}''')
-
 
     def delete_table_requests(self, username):
         self.crs.execute(f'''drop table requests_{username}''')
@@ -84,6 +82,15 @@ class Database:
     def if_request_already_send(self, source_user, destination_user):
         
         self.crs.execute(f'''select * from requests_{destination_user} where requests = "{source_user}";''')
+
+        for request in self.crs:
+            return True
+        else:
+            return False
+        
+    def if_incoming_request_exists(self, source_user, destination_user):
+        
+        self.crs.execute(f'''select * from requests_{source_user} where requests = "{destination_user}";''')
 
         for request in self.crs:
             return True

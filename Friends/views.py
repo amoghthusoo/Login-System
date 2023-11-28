@@ -48,6 +48,9 @@ def send_request(request):
             elif(database.if_already_friends(str(request.user), username)):
                 messages.info(request, "You are already friends!")
 
+            elif(database.if_incoming_request_exists(str(request.user), username)):
+                messages.info(request , "You have an incoming request from this user!")
+
             else:
                 database.send_friend_request(str(request.user), username)
                 messages.info(request, "Request sent!")

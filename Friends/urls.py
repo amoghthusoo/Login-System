@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    
     path("friends", views.friends, name = "friends"),
     path("requests", views.requests, name = "requests"),
     path("send_request", views.send_request, name = "send_request"),

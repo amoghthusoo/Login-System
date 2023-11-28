@@ -4,9 +4,6 @@ from django.contrib import messages
 
 from Friends.friends_lib import Database
 
-
-database = Database()
-
 # Create your views here.
 
 def index(request):
@@ -26,8 +23,6 @@ def signup(request):
             messages.info(request, "Please Enter all the details!")
             return redirect("signup")
 
-        print(password, confirm_password)
-
         if(password != confirm_password):
             messages.info(request, "Passwords do not match!")
             return redirect("signup")
@@ -36,6 +31,12 @@ def signup(request):
             messages.info(request, "Username not available!")
             return redirect("signup")
         else:
+
+            database = Database()
+            database.create_table_friends(username)
+            database.create_table_requests(username)
+            database.close_connection()
+
             user = User.objects.create_user(username = username, password = password)
             user.save()
             return redirect("login")
@@ -43,8 +44,6 @@ def signup(request):
         return render(request, "signup.html")
 
 def login(request):
-
-    # database = Database()
 
     if(request.method == "POST"):
         
@@ -58,13 +57,15 @@ def login(request):
 
             # creating tables for friend list and request list
 
+            database = Database()
+
             if(not database.if_table_friends_exists(username)):    
                 database.create_table_friends(username)
     
             if(not database.if_table_requests_exists(username)):
                 database.create_table_requests(username)
 
-
+            database.close_connection()
             return redirect("/")
         else:
             messages.info(request, "Invalid Credentials!")
