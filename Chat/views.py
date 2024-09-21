@@ -36,5 +36,8 @@ def clear(request):
     database.close_connection()
     return redirect("chat")
 
+def chat_room(request):
+    return render(request, "chat_room.html", {"username" : str(request.user)})
+
 
 # "amoghthusoo.mysql.pythonanywhere-services.com", "amoghthusoo", "<kivymd.>", "amoghthusoo$login_system"

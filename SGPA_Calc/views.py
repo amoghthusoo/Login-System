@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from . import sgpa_lib
 
+import random
+
 
 # Create your views here.
 
@@ -34,12 +36,9 @@ def calculate_save(request):
 
         except:
             messages.info(request, "Invalid Data!")
-
-            database.close_connection()
             return render(request, "sgpa_save.html")
 
     else:
-        database.close_connection()
         return render(request, "sgpa_save.html")
 
 
@@ -57,3 +56,24 @@ def records(request):
 
     database.close_connection()
     return render(request, "records.html", {"records" : records})
+
+
+def random_sgpa(request):
+
+    sgpa_obj = sgpa_lib.SGPA()
+
+    sgpas = []
+
+    for _ in range(100):
+        no_of_subjects = random.randint(6, 10)
+        credits = [random.choice([1, 3, 4]) for _ in range(no_of_subjects)]
+        marks = [random.randint(45, 100) for _ in range(no_of_subjects)]
+
+        sgpas.append(round(sgpa_obj.calculate(credits, marks), 2))
+
+    # print(no_of_subjects)
+    # print(credits)
+    # print(marks)
+    # print(sgpa)
+
+    return render(request, "random_sgpa.html", {"sgpa" : sgpas})

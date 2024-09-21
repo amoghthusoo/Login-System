@@ -23,4 +23,5 @@ urlpatterns = [
     path("SGPA_Calc/", include("SGPA_Calc.urls")),
     path("Chat/", include("Chat.urls")),
     path("Friends/", include("Friends.urls")),
+    path("tic_tac_toe/", include("tic_tac_toe.urls"))
 ]

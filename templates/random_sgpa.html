@@ -4,7 +4,7 @@
 
     <head>
         <title>
-            Login System
+            Random SGPA
         </title>
         <meta name="viewport" content="width = device-width, initial-scale = 1.0">
         <!-- <link rel = "stylesheet" type = "text/css" href = "{% static 'styles/style.css' %}"> -->
@@ -78,44 +78,54 @@
                 margin: auto;
             }
 
-            @media only screen and (max-width : 480px){
+            @media only screen and (max-width : 480px) {
                 div {
                     border-radius: 5px;
                     background-color: #f2f2f2;
                     padding: 20px;
-    
+
                     width: 70%;
                     margin: auto;
                 }
             }
 
+            td,
+            th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            tr:hover {
+                background-color: #ddd;
+            }
+
+            th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #7b0290;
+                color: white;
+            }
         </style>
     </head>
 
     <body>
 
         <ul>
-            {% if user.is_authenticated %}
             <li><a href="/">Home</a></li>
-            <!-- <li><a href="/Register/login.html">Login</a></li> -->
-            <li><a href="/SGPA_Calc/calculate_save">SGPA</a></li>
-            <li><a href="/Chat/chat">Chat</a></li>
-            <li><a href="/Chat/chat_room">Chat Room</a></li>
-            <li><a href="/Friends/friends">Friends</a></li>
-            <li><a href="/Register/logout">Logout</a></li>
-            <li><a href="/Register/delete_account">Delete Account</a></li>
-            {% else %}
-            <li><a href="/">Home</a></li>
-            <li><a href="/Register/login">Login</a></li>
-            <li><a href="/Register/signup">Signup</a></li>
-            {% endif %}
         </ul>
 
-        {% if user.is_authenticated %}
-        <p style="text-align : left; font-size : medium;"><b> Hello, {{user.username}}. You are now logged in.</b></p>
-        {% else %}
-        <p style="text-align : left; font-size : medium;"><b>Login or Create an Account!</b></p>
-        {% endif %}
+        
+
+        <h2> Random SGPAs are : {{sgpa}}</h2>
+
+        
+
+
 
     </body>
 
