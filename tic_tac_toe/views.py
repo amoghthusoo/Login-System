@@ -111,3 +111,4 @@ def reset(reset):
     buffer_O = None
     
     return JsonResponse({})
+

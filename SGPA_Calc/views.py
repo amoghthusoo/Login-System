@@ -4,7 +4,6 @@ from . import sgpa_lib
 
 import random
 
-
 # Create your views here.
 
 def calculate_save(request):
